@@ -1,0 +1,27 @@
+@import "./scss/mixins";
+@import "./scss/variables.scss";
+@import "./scss/mixins.scss";
+
+body {
+  margin: 0;
+  padding: 24px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: fixed;
+  background-color: $black;
+  @include xl {
+    overflow: hidden;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none; /* no underline */
+  }
+  @include md {
+    padding: 0px;
+  }
+  @include xl {
+    padding-top: 40px;
+  }
+}

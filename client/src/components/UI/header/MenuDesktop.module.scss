@@ -1,0 +1,78 @@
+@import "../../../scss/variables";
+@import "../../../scss/mixins";
+
+.menu {
+  width: 830px;
+  height: 96px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: white;
+  list-style-type: none;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(40.7742px);
+  li {
+    box-sizing: content-box;
+    font-family: "Barlow Condensed";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    padding: 5px;
+    line-height: 19px;
+    letter-spacing: 2.7px;
+    color: #ffffff;
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    cursor: pointer;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 3px;
+      bottom: -35px;
+      left: 0;
+      background-color: $cream;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+    &:hover:after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+    span {
+      font-family: "Barlow Condensed";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      letter-spacing: 2.7px;
+      margin-right: 11px;
+      color: #ffffff;
+    }
+  }
+  .clicked {
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      transform: scaleX(1);
+      height: 3px;
+      bottom: -35px;
+      left: 0;
+      background-color: $cream;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+  }
+}
+.line {
+  width: 40vw;
+  height: 1px;
+  background: #ffffff;
+  mix-blend-mode: normal;
+  opacity: 0.25;
+  z-index: 1;
+  transform: translateX(2vw);
+}

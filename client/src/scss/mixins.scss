@@ -1,0 +1,218 @@
+@import "variables.scss";
+@import "breakpoints.scss";
+
+// Small devices
+
+@mixin sm {
+  @media (min-width: #{$screen-sm-min}) {
+    @content;
+  }
+}
+
+// Medium devices - tablets
+@mixin md {
+  @media (min-width: #{$screen-md-min}) {
+    @content;
+  }
+}
+
+// Large devices
+@mixin lg {
+  @media (min-width: #{$screen-lg-min}) {
+    @content;
+  }
+}
+
+// Extra large devices
+@mixin xl {
+  @media (min-width: #{$screen-xl-min}) {
+    @content;
+  }
+}
+
+@mixin body-text {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  text-align: left;
+}
+
+@mixin subheading-one {
+  font-family: "Bellefair";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 32px;
+  text-transform: uppercase;
+  color: $white;
+}
+@mixin subheading-two {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 2.3625px;
+  text-transform: uppercase;
+  color: $white;
+}
+@mixin nav-text {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 2.7px;
+  color: $white;
+}
+
+@mixin heading-one {
+  font-family: "Bellefair";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 150px;
+  line-height: 172px;
+  color: $white;
+}
+
+@mixin heading-two {
+  font-family: "Bellefair";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 100px;
+  line-height: 115px;
+  color: $white;
+}
+
+@mixin heading-three {
+  font-family: "Bellefair";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 64px;
+  text-transform: uppercase;
+  color: $white;
+}
+
+@mixin heading-four {
+  font-family: "Bellefair";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 37px;
+  text-transform: uppercase;
+  color: $white;
+}
+
+@mixin heading-five {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: 4.725px;
+  color: $cream;
+}
+
+@mixin heading-five-mobile {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 2.7px;
+  color: $cream;
+}
+
+@mixin heading-one-mobile {
+  font-family: "Bellefair";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 80px;
+  line-height: 100px;
+  text-align: center;
+  color: $white;
+}
+
+@mixin body-text-mobile {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 25px;
+  text-align: center;
+  color: $cream;
+}
+@keyframes steam {
+	0% {
+		background-position: 0 0;
+	}
+	50% {
+		background-position: 400% 0;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}
+
+@mixin round-button {
+  background: $white;
+  border-radius: 50%;
+  border: none;
+  font-family: "Bellefair";
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 23px;
+  letter-spacing: 1.25px;
+  text-align: center;
+  height: 150px;
+  width: 150px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s linear;
+  cursor: pointer;
+  @include md {
+    width: 242px;
+    height: 242px;
+    font-size: 32px;
+    line-height: 37px;
+    letter-spacing: 2px;
+  }
+  @include xl {
+	position: relative;
+	background: linear-gradient(0deg, #ffffff, #f7f7f7);
+    transition: all 0.2s linear;
+	&:before {
+		content: '';
+		position: absolute;
+		left: -2px;
+        border-radius: 50%;
+		top: -2px;
+		background: linear-gradient(45deg, #fae7c2, #415172, #c8b198,#6f7b97, #3c4f69, #c8b198, #c8b198, #fff8d5,#ffff00, #ff0000);
+		background-size: 400%;
+		width: calc(100% + 4px);
+		height: calc(100% + 4px);
+		z-index: -1;
+		animation: steam 20s linear infinite;
+	}
+	&:after {
+		content: '';
+		position: absolute;
+		left: -2px;
+		top: -2px;
+		background: linear-gradient(45deg, #fae7c2, #415172, #c8b198,#6f7b97, #3c4f69, #c8b198, #c8b198, #fff8d5,#ffff00, #ff0000);
+		background-size: 400%;
+		width: calc(100% + 4px);
+		height: calc(100% + 4px);
+		z-index: -1;
+		animation: steam 20s linear infinite;
+		filter: blur(50px);
+	}
+    &:hover {
+        font-size: 37px;
+    }
+}
+      
+  }

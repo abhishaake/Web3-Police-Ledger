@@ -1,0 +1,279 @@
+@import "./../../scss/variables";
+@import "./../../scss/mixins";
+
+// body {
+//   background-image: url("./technology-images/background-technology-mobile.jpg");
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   background-color: $black;
+//   @include md {
+//     background-image: url("./technology-images/background-technology-tablet.jpg");
+//     background-size: cover;
+//     background-color: $black;
+//   }
+//   @include xl {
+//     background-image: url("./technology-images/background-technology-desktop.jpg");
+//     background-size: cover;
+//     background-repeat: no-repeat;
+//     background-color: $black;
+//   }
+// }
+.technologyBody {
+  background-image: url("./technology-images/background-technology-mobile.jpg");
+  background-color: $black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -2;
+  @include md {
+    background-image: url("./technology-images/background-technology-tablet.jpg");
+    background-size: cover;
+    background-color: $black;
+  }
+  @include xl {
+    background-image: url("./technology-images/background-technology-desktop.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: $black;
+  }
+}
+.title {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 2.7px;
+  color: #ffffff;
+  margin-top: 24px;
+  text-align: center;
+  z-index: -1;
+  @include md {
+    text-align: left;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 3.375px;
+    margin-top: 40px;
+    margin-left: 38px;
+  }
+  @include xl {
+    font-size: 28px;
+    line-height: 34px;
+    letter-spacing: 4.725px;
+    margin-left: 166px;
+    margin-bottom: 0;
+  }
+  span {
+    font-family: "Barlow Condensed";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 2.7px;
+    color: #ffffff;
+    mix-blend-mode: normal;
+    opacity: 0.25;
+    margin-right: 18px;
+    @include md {
+      font-size: 20px;
+      line-height: 24px;
+      letter-spacing: 3.375px;
+    }
+    @include xl {
+      font-size: 28px;
+      line-height: 34px;
+      letter-spacing: 4.725px;
+      margin-right: 28px;
+    }
+  }
+}
+
+.technology {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @include xl {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+  & .img {
+    margin-top: 12px;
+    width: 120%;
+    height: 170px;
+    @include md {
+      height: 310px;
+      margin-top: 40px;
+    }
+    @include xl {
+      height: 527px;
+      width: 515px;
+      margin-top: -20px;
+    }
+  }
+  & .buttonDescription {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @include xl {
+      flex-direction: row;
+    }
+    & .buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 152px;
+      margin-top: 34px;
+      @include md {
+        width: 210px;
+        margin-top: 56px;
+      }
+      @include xl {
+        width: 80px;
+      }
+      @include xl {
+        flex-direction: column;
+        margin-left: 166px;
+        margin-right: 80px;
+      }
+      & .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        background-color: transparent;
+        font-family: "Bellefair";
+        font-weight: 400;
+        mix-blend-mode: normal;
+        font-size: 16px;
+        line-height: 18px;
+        text-align: center;
+        letter-spacing: 1px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 50%;
+        color: white;
+        transition: all 0.2s linear;
+        @include md {
+          width: 60px;
+          height: 60px;
+          font-size: 24px;
+          line-height: 28px;
+          text-align: center;
+          letter-spacing: 1.5px;
+        }
+        @include xl {
+          width: 80px;
+          height: 80px;
+          font-size: 32px;
+          line-height: 37px;
+          margin-bottom: 32px;
+        }
+        &:hover {
+          background-color: #ffffff;
+          color: #0b0d17;
+        }
+      }
+      & .clicked {
+        background-color: #ffffff;
+        color: #0b0d17;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        border: none;
+        font-family: "Bellefair";
+        font-weight: 400;
+        mix-blend-mode: normal;
+        font-size: 16px;
+        line-height: 18px;
+        text-align: center;
+        letter-spacing: 1px;
+        @include md {
+          width: 60px;
+          height: 60px;
+          font-size: 24px;
+          line-height: 28px;
+          text-align: center;
+          letter-spacing: 1.5px;
+        }
+        @include xl {
+          width: 80px;
+          height: 80px;
+          font-size: 32px;
+          line-height: 37px;
+          margin-bottom: 32px;
+        }
+      }
+    }
+    & .information {
+      & .terminology {
+        font-family: "Barlow Condensed";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        text-align: center;
+        letter-spacing: 2.3625px;
+        color: #d0d6f9;
+        @include md {
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: 2.7px;
+          margin-top: 44px;
+        }
+        @include xl {
+          text-align: left;
+          @include nav-text;
+        }
+      }
+      & .descriptionTitle {
+        font-family: "Bellefair";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 28px;
+        text-align: center;
+        text-transform: uppercase;
+        color: #ffffff;
+        margin-bottom: 16px;
+        @include md {
+          font-size: 40px;
+          line-height: 46px;
+          margin-top: 16px;
+        }
+        @include xl {
+          text-align: left;
+          @include heading-three;
+        }
+      }
+      & .description {
+        font-family: "Barlow";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 25px;
+        text-align: center;
+        color: #d0d6f9;
+        width: 327px;
+        @include md {
+          font-size: 16px;
+          line-height: 28px;
+          width: 458px;
+          margin-top: 16px;
+        }
+        @include xl {
+          text-align: left;
+          @include body-text;
+        }
+      }
+    }
+  }
+}

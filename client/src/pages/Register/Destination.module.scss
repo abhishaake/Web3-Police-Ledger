@@ -1,0 +1,365 @@
+@import "./../../scss/variables";
+@import "./../../scss/mixins";
+
+:root {
+  --planet: url("./destination-images/moon.jpg");
+}
+
+
+
+.destinationBody {
+  
+    background-image: url("./destination-images/background-technology-desktop.jpg");
+    background-color: $black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -2;
+    @include md {
+      background-image: url("./destination-images/background-technology-desktop.jpg");
+      background-size: cover;
+      background-color: $black;
+    }
+    @include xl {
+      background-image: url("./destination-images/background-technology-desktop.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-color: $black;
+    }
+  }
+
+.destination {
+  overflow-x: hidden;
+  overflow-y: auto;
+  &__title {
+    font-family: "Barlow Condensed";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 2.7px;
+    color: #ffffff;
+    margin-top: 24px;
+    text-align: center;
+    z-index: -1;
+    @include md {
+      text-align: left;
+      font-size: 20px;
+      line-height: 24px;
+      letter-spacing: 3.375px;
+      margin-top: 40px;
+      margin-left: 38px;
+    }
+    @include xl {
+      font-size: 28px;
+      line-height: 34px;
+      letter-spacing: 4.725px;
+      margin-left: 166px;
+    }
+    span {
+      font-family: "Barlow Condensed";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      letter-spacing: 2.7px;
+      color: #ffffff;
+      mix-blend-mode: normal;
+      opacity: 0.25;
+      margin-right: 18px;
+      @include md {
+        font-size: 20px;
+        line-height: 24px;
+        letter-spacing: 3.375px;
+      }
+      @include xl {
+        font-size: 28px;
+        line-height: 34px;
+        letter-spacing: 4.725px;
+        margin-right: 28px;
+      }
+    }
+  }
+}
+.container {
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  @include xl {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  @keyframes spin {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .planet {
+    --background-planet: var(--planet);
+    width: 170px;
+    display: inline-block;
+    margin-top: 32px;
+    margin-left: 100px;
+    margin-right: auto;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 0px 0px #00aeff inset, 0 0 30px 0px #04cafc9d;
+    position: relative;
+    @include md {
+      margin-top: 60px;
+      width: 300px;
+      height: 300px;
+    }
+    @include xl {
+        margin-top: 0px;
+      width: 445px;
+      height: 445px;
+    }
+    &:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      box-shadow: -80px -50px 80px 3px #000 inset;
+      border-radius: 50%;
+    }
+    &::before {
+      content: "";
+      display: block;
+      width: 400%;
+      padding-top: 100%;
+      animation: spin 250s linear infinite;
+      background-image: var(--background-planet);
+      background-size: auto 100%;
+    }
+  }
+}
+
+.description {
+  margin-left: 70px;
+  margin-right: auto;
+  margin-top: -459px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include xl {
+    align-items: flex-start;
+  }
+
+  &__inputbox {
+    width: 353px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 3px;
+    resize: none;
+    font-size: 18px;
+    line-height: 18px;
+    overflow: auto;
+    height: auto;
+    padding: 6px;
+    box-shadow: 0px 4px 10px -8px black;
+  }
+
+  &__label {
+    margin-left: 35px;
+  }
+
+  &__menu {
+    width: 500px;
+    height: 28px;
+    display: flex;
+    margin-top: 2px;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    list-style-type: none;
+    position: relative;
+    @include md {
+      margin-top: 50px;
+      width: 585px;
+      height: 34px;
+    }
+    @include xl {
+        justify-content: flex-start;
+    }
+    .clicked {
+      &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        transform: scaleX(1);
+        height: 3px;
+        bottom: -8px;
+        left: 0;
+        background-color: white;
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+        @include md {
+          bottom: -12px;
+        }
+      }
+    }
+   
+    
+    li {
+      
+      font-family: "Barlow Condensed";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      letter-spacing: 2.3625px;
+      color: #ffffff;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      @include md {
+        
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: 2.7px;
+      }
+      @include xl {
+        margin-right: 35px;
+      }
+      &::after {
+        
+        content: "";
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 3px;
+        bottom: -8px;
+        left: 0;
+        background-color: white;
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+        @include md {
+          bottom: -12px;
+        }
+      }
+      &:hover:after {
+        
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+    }
+  }
+  &__planetName {
+    font-family: "Bellefair";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 64px;
+    text-align: center;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 0;
+    @include md {
+      font-size: 80px;
+      line-height: 92px;
+      margin-top: 32px;
+    }
+    @include xl {
+      font-size: 100px;
+      line-height: 115px;
+      text-align: left;
+    }
+  }
+  &__planetDescription {
+    position: relative;
+    font-family: "Barlow";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 25px;
+    text-align: center;
+    color: #d0d6f9;
+    margin: 0;
+    @include md {
+      font-size: 16px;
+      line-height: 28px;
+      width: 573px;
+      height: 84px;
+      margin-top: 8px;
+    }
+    @include xl {
+      text-align: left;
+      font-size: 18px;
+      line-height: 32px;
+    }
+  }
+  &__line {
+    margin-top: 32px;
+    width: 327px;
+    height: 1px;
+    background: #383b4b;
+    @include md {
+      width: 573px;
+      margin-top: 49px;
+    }
+  }
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    
+    @include md {
+      width: 773px;
+      height: 90px;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    @include xl {
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .distance {
+      @include xl {
+        width: 1200px;
+        margin-right: 50px;
+      }
+    }
+  }
+  &__smallTitle {
+    font-family: "Barlow Condensed";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    letter-spacing: 2.3625px;
+    color: #d0d6f9;
+    margin-top: 32px;
+    @include xl {
+      text-align: left;
+
+     
+    }
+  }
+  &__information {
+    margin: 0;
+    margin-top: 12px;
+    font-family: "Bellefair";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 32px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff;
+    @include xl {
+      text-align: left;
+    }
+  }
+}

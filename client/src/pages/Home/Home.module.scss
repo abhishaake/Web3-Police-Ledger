@@ -1,0 +1,97 @@
+@import "./../../scss/variables";
+@import "./../../scss/mixins";
+
+
+.homeBody {
+    background-image: url("./home-images/background-technology-desktop.jpg");
+    background-color: $black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -2;
+    @include md {
+      background-image: url("./home-images/background-technology-desktop.jpg");
+      background-size: cover;
+      background-color: $black;
+    }
+    @include xl {
+      background-image: url("./home-images/background-technology-desktop.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-color: $black;
+    }
+  }
+
+.home {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @include xl {
+    
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 30px;
+  }
+  &__headingFive {
+    @include heading-five-mobile;
+    margin-top: 48px;
+    @include md {
+      margin-top: 106px;
+      font-size: 20px;
+      line-height: 24px;
+      letter-spacing: 3.375px;
+    }
+    @include xl {
+      @include heading-five;
+      text-align: left;
+      margin-bottom: 24px;
+    }
+  }
+  &__headingTwo {
+    @include heading-one-mobile;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    @include md {
+      margin-top: 24px;
+      font-size: 150px;
+      line-height: 150px;
+    }
+    @include xl {
+      @include heading-one;
+      text-align: left;
+      margin-bottom: 0px;
+    }
+  }
+  &__bodyText {
+    @include body-text-mobile;
+    margin-bottom: 81px;
+    @include md {
+      margin-top: 24px;
+      margin-bottom: 0;
+      width: 444px;
+      height: 112px;
+      font-size: 16px;
+      line-height: 28px;
+      text-align: center;
+    }
+    @include xl {
+      @include body-text;
+      margin-top: 24px;
+    }
+  }
+  &__button {
+    @include round-button;
+    @include md {
+      margin-top: 156px;
+    }
+  }
+}

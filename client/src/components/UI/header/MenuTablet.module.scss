@@ -1,0 +1,58 @@
+@import "../../../scss/variables";
+@import "../../../scss/mixins";
+
+.menu {
+  width: 450px;
+  height: 96px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: white;
+  list-style-type: none;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(40.7742px);
+  li {
+    box-sizing: content-box;
+    font-family: "Barlow Condensed";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 5px;
+    line-height: 17px;
+    letter-spacing: 2.3625px;
+    color: #ffffff;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 3px;
+      bottom: -35px;
+      left: 0;
+      background-color: $cream;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+    &:hover:after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+  }
+  .clicked {
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      transform: scaleX(1);
+      height: 3px;
+      bottom: -35px;
+      left: 0;
+      background-color: $cream;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+  }
+}
