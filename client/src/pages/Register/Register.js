@@ -2,27 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useSpring, useTransition, animated } from "react-spring";
 import styles from "./Destination.module.scss";
 import data from "../../data.json";
-import moon from "./destination-images/moon.jpg";
-import titan from "./destination-images/titan.jpg";
-import europa from "./destination-images/europa.jpg";
-import mars from "./destination-images/mars.jpg";
 import india from "./destination-images/India.jpg";
 import station from "./destination-images/station.png";
 import officer from "./destination-images/officer.jpg";
 import admin from "./destination-images/admin.png";
 import getWeb3 from "../../getWeb3";
-import Auction from "../../contracts/Auction.json";
+import Records from "../../contracts/Records.json";
 import Header from "../../components/UI/header/Header";
 import { myGlobal } from "../../globalvariable";
 import {emailBody} from "./emailbody.js";
 import emailImage from "./image-1.png";
-//import {Email} from "../../SendMail";
-//import ScriptTag from "react-script-tag";
-//<script src="https://smtpjs.com/v3/smtp.js"> </script>
 
 const Register = () => {
 
-  const [form, setForm] = useState({"name":"", "phone":"", "email":"", "adhar":"","complaint":"","suspect":""});
+  const [form, setForm] = useState({"name":"", "phone":"", "email":"", "adhar":"","complaint":"","suspect":"","date":"","place":"","stationID":"","address":"","pincode":"","officerID":"","adminID":""});
   const [planet, setPlanet] = useState(data.destinations[0]);
   const [image, setImage] = useState(india);
   const [clicked, setClicked] = useState(0);
@@ -30,14 +23,15 @@ const Register = () => {
   const[contract, setContract] = useState("");
   let mycontract = "";
   let myaccount = "";
+  let uniqueId = "";
   const[account, setAccount] = useState("");
   let loggedInAccount = "";
 
   const loadWeb3Contract = async (web3) => {
     const networkId = await web3.eth.net.getId();
-    const networkData = Auction.networks[networkId];
+    const networkData = Records.networks[networkId];
     if(networkData){
-      const abi = Auction.abi;
+      const abi = Records.abi;
       const address = networkData.address;
       const contract = new web3.eth.Contract(abi, address);
       setContract(contract);
@@ -54,7 +48,7 @@ const Register = () => {
       setAccount(accounts[0]);
       myaccount = accounts[0];
       loggedInAccount = accounts[0];
-      console.log("account =  "+ myaccount);
+      //console.log("account =  "+ myaccount);
       if(myaccount!==adminAccount){
         setShow(false);
       }
@@ -63,10 +57,6 @@ const Register = () => {
     return "";
   }
   
-  const print = () => {
-    console.log(form);
-    console.log(form.name);
-  }
   const temp = async () => {
     const web3 = await getWeb3();
 
@@ -77,9 +67,68 @@ const Register = () => {
 
 
   const [show, setShow] = useState(true);
-  const [firNumber, setfirNumber] = useState("1265462147828");
   
-  const sendEmail = (event) => {
+
+  const register = async (num) => {
+    if(num===0){
+      // for FIR Registration
+      if(form.name==="" || form.phone==="" || form.email==="" || form.adhar==="" || form.complaint==="" || form.suspect==="" || form.date==="" || form.place===""){
+        alert("Form Invalid ! Please fill the complete Form.");
+        return;
+      }
+
+      uniqueId = Date.now();
+
+      contract.methods.addFIR(uniqueId,form.name,form.phone,form.email,form.adhar,form.complaint,form.suspect,form.date,form.place).send({from: account}, (error)=>{
+        if(!error){
+            sendEmail();
+        }
+      });
+
+    }
+    
+
+    else if(num===1){
+      // for station registration
+      if(form.name==="" || form.phone==="" || form.email==="" || form.stationID==="" || form.address==="" || form.pincode===""){
+        alert("Form Invalid ! Please fill the complete Form.");
+        return;
+      }
+      contract.methods.addStation(form.name,form.email,form.phone,form.stationID,form.address,form.pincode).send({from: account}, (error)=>{
+        if(!error){
+            afterMail(2);
+        }
+      });
+    }
+
+    else if(num===2){
+      // for officer registration
+      if(form.name==="" || form.phone==="" || form.email==="" || form.adhar==="" || form.officerID===""){
+        alert("Form Invalid ! Please fill the complete Form.");
+        return;
+      }
+      contract.methods.addOfficer(form.name,form.email,form.phone,form.adhar,form.officerID,form.officerID).send({from: account}, (error)=>{
+        if(!error){
+            afterMail(2);
+        }
+      });
+    }
+
+    else if(num===3){
+      // for admin registration
+      if(form.name==="" || form.phone==="" || form.email==="" || form.adhar==="" || form.adminID===""){
+        alert("Form Invalid ! Please fill the complete Form.");
+        return;
+      }
+      contract.methods.addAdmin(form.name,form.email,form.phone,form.adhar,form.adminID).send({from: account}, (error)=>{
+        if(!error){
+            afterMail(2);
+        }
+      });
+    }
+  }
+
+  const sendEmail = () => {
     //event.preventDefault();
     let bodyContent = `<table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
     <tbody>
@@ -96,13 +145,18 @@ const Register = () => {
   <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
     <tbody>
       <tr>
-        <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-          
+        <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" >
+     <div style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
+        <p style="line-height: 140%;"><strong>FIR ID: <span style="color: #2dc26b; line-height: 19.6px;">${uniqueId}</span></strong></p>
+      </div>      
     <div style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-      <p style="line-height: 140%;"><strong>NAME: <span style="color: #2dc26b; line-height: 19.6px;">${form.name}</span></strong></p>
+      <p style="line-height: 140%;"><strong>Name: <span style="color: #2dc26b; line-height: 19.6px;">${form.name}</span></strong></p>
     </div>
     <div style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-      <p style="line-height: 140%;"><strong>FIR Number: <span style="color: #2dc26b; line-height: 19.6px;">${firNumber} </span></strong></p>
+      <p style="line-height: 140%;"><strong>Phone No: <span style="color: #2dc26b; line-height: 19.6px;">${form.phone} </span></strong></p>
+    </div>
+    <div style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
+      <p style="line-height: 140%;"><strong>Email: <span style="color: #2dc26b; line-height: 19.6px;">${form.email} </span></strong></p>
     </div>
   
         </td>
@@ -116,9 +170,11 @@ const Register = () => {
         <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
           
     <div style="font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-      <p style="line-height: 140%;"><span style="text-decoration: underline; line-height: 22.4px;"><strong>${form.email}</strong></span></p>
   <p style="line-height: 140%;"> </p>
-  <p style="line-height: 140%;">${form.complaint}</p>
+  <p style="line-height: 140%;"><span style="font-weight:bold">Complaint :</span> ${form.complaint}</p>
+  <p style="line-height: 140%;"><span style="font-weight:bold">Suspect INFO :</span> ${form.suspect}</p>
+  <p style="line-height: 140%;"><span style="font-weight:bold">Date :</span> ${form.date}</p>
+  <p style="line-height: 140%;"><span style="font-weight:bold">Place :</span>${form.place}</p>
     </div>
   
         </td>
@@ -129,21 +185,25 @@ const Register = () => {
   let body = emailBody.body + bodyContent + emailBody.body2;
     const config = {
         SecureToken: "d83897d2-a739-44df-8dda-7c3cb9a4bc07",
-        To: "abhishekverma0203@gmail.com",
+        To: form.email,
         From: "recordspolice5@gmail.com",
         Subject: "Thank You for Registering",
         Body: body,
     };
 
     if(window.Email){
-      window.Email.send(config).then(()=>afterMail());
+      window.Email.send(config).then(()=>afterMail(1));
     }
 
   };
   
-  const afterMail = () => {
-    alert("Successfully Registered !");
-    setForm(form => ({...form, "name":"", "phone":"", "email":"", "adhar":"","complaint":"","suspect":""}));
+  const afterMail = (num) => {
+    if(num===1){
+      alert("Successfully Registered ! Details sent to your mail." );
+    }
+    else alert("Successfully Registered !");
+    
+    setForm(form => ({...form, "name":"", "phone":"", "email":"", "adhar":"","complaint":"","suspect":"","date":"","place":"","stationID":"","address":"","pincode":"","officerID":"","adminID":""}));
   }
 
 
@@ -161,18 +221,11 @@ const Register = () => {
 
   }, [image]);
 
-  const func = async () => {
-    let num = await contract.methods.getNum().call();
-    console.log("num = " + num);
-  }
-
   const planetPicker = (destination, planet) => {
     setPlanet(data.destinations[destination]);
     setImage(planet);
     setClicked(destination);
 
-    //func();
-    console.log("prev page = " + document.referrer);
     if(account!==adminAccount){
       setShow(false);
     }
@@ -353,7 +406,7 @@ const Register = () => {
                           <label className={styles.description__label} for="name">ADHAAR ID: </label>
                           <input
                             value={form.adhar}
-                          onChange={(e)=> setForm(form => ({...form, "adhar":e.target.value}))}
+                            onChange={(e)=> setForm(form => ({...form, "adhar":e.target.value}))}
                             type="text"
                             id="name"
                             name="name"
@@ -362,8 +415,10 @@ const Register = () => {
                         </>}
 
                           { clicked === 1 && <>
-                            <label className={styles.description__label} for="name">STATION ID: </label>
+                            <label className={styles.description__label} for="stationID">STATION ID: </label>
                             <input
+                              value={form.stationID}
+                              onChange={(e)=> setForm(form => ({...form, "stationID":e.target.value}))}
                               type="text"
                               id="name"
                               name="name"
@@ -384,6 +439,8 @@ const Register = () => {
                       >
                         <label for="name">OFFICER ID: </label>
                         <input
+                          value={form.officerID}
+                          onChange={(e)=> setForm(form => ({...form, "officerID":e.target.value}))}
                           type="text"
                           id="name"
                           name="name"
@@ -402,6 +459,7 @@ const Register = () => {
                       >
                         <label for="name">ADDRESS: </label>
                         <textarea
+                          value={form.address}
                           rows={rows}
                           className={styles.description__inputbox}
                           onChange={(e)=> {handleChange(e,3); setForm(form => ({...form, "address":e.target.value}))}}
@@ -419,6 +477,8 @@ const Register = () => {
                       >
                         <label for="name">PINCODE: </label>
                         <input
+                          value={form.pincode}
+                          onChange={(e)=> setForm(form => ({...form, "pincode":e.target.value}))}
                           style={{marginLeft:12 + 'px'}}
                           type="text"
                           id="name"
@@ -439,6 +499,8 @@ const Register = () => {
                       >
                         <label for="name">ADMIN ID: </label>
                         <input
+                          value={form.adminID}
+                          onChange={(e)=> setForm(form => ({...form, "adminID":e.target.value}))}
                           type="text"
                           id="name"
                           name="name"
@@ -495,7 +557,8 @@ const Register = () => {
                         
                         <label for="name">CRIME DATE: </label>
                         <input
-                          
+                          value={form.date}
+                          onChange={(e)=> setForm(form => ({...form, "date":e.target.value}))}
                           type="date"
                           id="name"
                           name="name"
@@ -504,7 +567,8 @@ const Register = () => {
 
                         < label className={styles.description__label} for="name">CRIME PLACE: </label>
                         <input
-                          
+                          value={form.place}
+                          onChange={(e)=> setForm(form => ({...form, "place":e.target.value}))}
                           type="text"
                           id="name"
                           name="name"
@@ -515,17 +579,14 @@ const Register = () => {
                 )}
                 {fadeIn(
                   (style, i) =>
-                    clicked === 0 && (
                       <div
                         style={style}
                         className={styles.description__smallTitle}
                       >
                         
-                        <button onClick={() => sendEmail()}> Click to send Mail</button>
-                        <button onClick={() => print()}> Check </button>
-                        
+                        <button onClick={() => register(clicked)} className={styles.button1} role="button">Register !</button>
                       </div>
-                    )
+                    
                 )}
               </div>
               

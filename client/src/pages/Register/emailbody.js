@@ -256,7 +256,7 @@ table, td { color: #000000; } </style>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:8px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%; text-align: center;">www.unlayer.com</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: center;">http://localhost:3000/</p>
   </div>
 
       </td>
@@ -270,7 +270,9 @@ table, td { color: #000000; } </style>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:8px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%; text-align: center;">2261 Market Street #4667, San Francisco, CA 94114</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: center;">Abhishek Verma 9919102001</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: center;">Priyal Sharma 9919102016</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: center;">Harsh Kumar Mahour 9919102051</p>
   </div>
 
       </td>
@@ -278,19 +280,6 @@ table, td { color: #000000; } </style>
   </tbody>
 </table>
 
-<table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 50px;font-family:arial,helvetica,sans-serif;" align="left">
-        
-  <div style="color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%; text-align: center;"><span style="font-family: Raleway, sans-serif; font-size: 14px; line-height: 19.6px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.</span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
 
   <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
   </div>

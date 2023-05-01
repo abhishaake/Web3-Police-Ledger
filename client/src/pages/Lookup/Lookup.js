@@ -2,25 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useSpring, useTransition, animated } from "react-spring";
 import styles from "./Destination.module.scss";
 import data from "../../data.json";
-import moon from "../Register/destination-images/moon.jpg";
-import titan from "../Register/destination-images/titan.jpg";
-import europa from "../Register/destination-images/europa.jpg";
-import mars from "../Register/destination-images/mars.jpg";
 import india from "../Register/destination-images/India.jpg";
 import station from "../Register/destination-images/station.png";
 import officer from "../Register/destination-images/officer.jpg";
 import admin from "../Register/destination-images/admin.png";
 import Header from "../../components/UI/header/Header";
 import { myGlobal } from "../../globalvariable";
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-import Button from 'react-bootstrap/Button';
 import getWeb3 from "../../getWeb3";
-import Auction from "../../contracts/Auction.json";
+import Records from "../../contracts/Records.json";
 import Stations from "./Stations.json";
 
-
-//Modal.setAppElement('#yourAppElement');
 
 
 const Lookup = () => {
@@ -41,13 +33,11 @@ const Lookup = () => {
     setIsOpen(true);
   }
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
-  }
 
   function closeModal() {
     setIsOpen(false);
+    setResult([]);
+    setId("");
   }
 
 
@@ -64,9 +54,9 @@ const Lookup = () => {
   
   const loadWeb3Contract = async (web3) => {
     const networkId = await web3.eth.net.getId();
-    const networkData = Auction.networks[networkId];
+    const networkData = Records.networks[networkId];
     if(networkData){
-      const abi = Auction.abi;
+      const abi = Records.abi;
       const address = networkData.address;
       const contract = new web3.eth.Contract(abi, address);
       setContract(contract);
@@ -103,56 +93,97 @@ const Lookup = () => {
 
   }, []);
 
-  const connect = async () => {
-    let num = await contract.methods.getNum().call();
-    console.log("this is num = " + num);
-  }
-
   const onChangeHandler = async (num,_id) => {
-
-    if(num===0){
       setId(_id);
       if(_id==="") return;
       let final = [];
+
+    if(num===0){
+      // fir
       let res = await contract.methods.getFIR(_id).call();
-      console.log("res =" + res);
-      console.log("getting typeof = " + typeof res);
       final.push(res);
-      console.log("final =" + final);
-      console.log("getting typeof = " + typeof final);
       setResult(final);
     }
 
     else if(num===1){
-      if(_id==="") return;
-
+      // station
+      let res = await contract.methods.getStation(_id).call();
+      final.push(res);
+      setResult(final);
+    }
+    else if(num===2){
+      // officer
+      let res = await contract.methods.getOfficer(_id).call();
+      final.push(res);
+      setResult(final);
+    }
+    else if(num===3){
+      // criminal
+      let res = await contract.methods.getCriminal(_id).call();
+      final.push(res);
+      setResult(final);
     }
     
   }
 
   const connect2 = (clicked) => {
-    if(clicked===0){
-      console.log("after res = " + result);
-      openModal();
-    }
-    else if(clicked===10){
+    if(clicked===10){
       if(stationName==="") return;
+      let body1 = `
+      <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="fit-content" border="0">
+      <thead>
+      <tr>
+      <th style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;">
+      <strong>S. NO</strong></th>
+      <th style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" >
+      <strong>DISTRICT</strong></th>
+      <th style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;">
+      <strong>STATION</strong></th>
+      <th style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;">
+      <strong>CODE</strong></th>
+      </tr>
+      </thead>
+      <tbody>`;
+
+      let body2 = `</tbody>
+      </table>
+      `;
+
       let body = ``;
       let ser = 1;
       let len = Object.keys(Stations).length;
       for(let i =0;i<len;i++){
-            console.log("    " + Stations[i]);
-          if(Stations[i].DISTRICTNAME === stationName){
-            console.log("station = " + Stations[i].DISTRICTNAME);
-            body = body + `<div style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-            <p style="line-height: 140%;"><strong>S. NO:  <span style="color: #2dc26b; line-height: 19.6px;">${ser}</span></strong></p>
-            <p style="line-height: 140%;"><strong>District: <span style="color: #2dc26b; line-height: 19.6px;">${Stations[i].DISTRICTNAME}</span></strong></p>
-            <p style="line-height: 140%;"><strong>Station: <span style="color: #2dc26b; line-height: 19.6px;">${Stations[i].POLICESTATIONNAME}</span></strong></p>
-            <p style="line-height: 140%;"><strong>Code: <span style="color: #2dc26b; line-height: 19.6px;">${Stations[i].Code}</span></strong></p>
-            </div>`;
+          if(Stations[i].DISTRICTNAME === stationName.toUpperCase()){
+            //console.log("station = " + Stations[i].DISTRICTNAME);
+            body = body + `
+            <tr style="background-color: gray;">
+            <td style="overflow-wrap:break-word;word-break:break-word;padding:5px;font-family:arial,helvetica,sans-serif;">
+            <div style="font-size: 14px; line-height: 100%; text-align: center; word-wrap: break-word;">
+            <p style="line-height: 100%;"><strong><span style="color: white; line-height: 14px;">${ser}</span></strong></p>
+            </div>
+            </td>
+            <td style="overflow-wrap:break-word;word-break:break-word;padding:5px;font-family:arial,helvetica,sans-serif;">
+            <div style="font-size: 14px; line-height: 100%; text-align: center; word-wrap: break-word;">
+            <p style="line-height: 100%;"><strong><span style="color: white; line-height: 14px;">${Stations[i].DISTRICTNAME}</span></strong></p>
+            </div>
+            </td>
+            <td style="overflow-wrap:break-word;word-break:break-word;padding:5px;font-family:arial,helvetica,sans-serif;">
+            <div style="font-size: 14px; line-height: 100%; text-align: center; word-wrap: break-word;">
+            <p style="line-height: 100%;"><strong><span style="color: white; line-height: 14px;">${Stations[i].POLICESTATIONNAME}</span></strong></p>
+            </div>
+            </td>
+            <td style="overflow-wrap:break-word;word-break:break-word;padding:5px;font-family:arial,helvetica,sans-serif;">
+            <div style="font-size: 14px; line-height: 100%; text-align: center; word-wrap: break-word;">
+            <p style="line-height: 100%;"><strong><span style="color: white; line-height: 14px;">${Stations[i].Code}</span></strong></p>
+            </div>
+            </td>
+            </tr>
+            `;
             ser= ser + 1;
           }
       }
+
+      body = body1 + body + body2;
 
       const config = {
         SecureToken: "d83897d2-a739-44df-8dda-7c3cb9a4bc07",
@@ -165,6 +196,12 @@ const Lookup = () => {
       if(window.Email){
         window.Email.send(config).then(()=>afterMail());
       }
+    }
+
+    else{
+      if(id==="") return;
+      console.log("after res = " + result);
+      openModal();
     }
     
   }
@@ -222,18 +259,22 @@ const Lookup = () => {
           >
             <h2 className={styles.modal__title}>
               <span>DETAILS</span>
-            <button className={styles.modal__button} onClick={closeModal}>X</button>
+            
             </h2>
+            <button className={styles.modal__button} onClick={closeModal}>X</button>
             
             <table className={styles.modal__table}>
               {result.map((res, key)=><tbody key={key}>
                 
-                <tr > <td className={styles.modal__content}> Name </td> <td className={styles.modal__content}> {res.name} </td> </tr>
-                <tr > <td className={styles.modal__content}> Phone </td> <td className={styles.modal__content}> {res.phone} </td> </tr>
-                <tr > <td className={styles.modal__content}> Complaint </td> <td className={styles.modal__content}> {res.complaint} </td> </tr>
-                <tr > <td className={styles.modal__content}> Date </td> <td className={styles.modal__content}> {res.date} </td> </tr>
-                <tr > <td className={styles.modal__content}> Place </td> <td className={styles.modal__content}> {res.place} </td> </tr>
-                <tr > <td className={styles.modal__content}> Suspect </td> <td className={styles.modal__content}> {res.suspect} </td> </tr>
+                {<tr > <td className={styles.modal__content}> Name </td> <td className={styles.modal__content}> {res.name} </td> </tr>}
+                {(clicked===0 || clicked===1 || clicked===2) && <tr > <td className={styles.modal__content}> Email </td> <td className={styles.modal__content}> {res.email} </td> </tr>}
+                {clicked===1 && <tr > <td className={styles.modal__content}> Address </td> <td className={styles.modal__content}> {res.stationaddress} </td> </tr>}
+                {clicked===1 && <tr > <td className={styles.modal__content}> Pincode </td> <td className={styles.modal__content}> {res.pincode} </td> </tr>}
+                {clicked===0 && <tr > <td className={styles.modal__content}> Complaint </td> <td className={styles.modal__content}> {res.complaint} </td> </tr>}
+                {clicked===0 && <tr > <td className={styles.modal__content}> Date </td> <td className={styles.modal__content}> {res.date} </td> </tr>}
+                {clicked===0 && <tr > <td className={styles.modal__content}> Place </td> <td className={styles.modal__content}> {res.place} </td> </tr>}
+                {clicked===0 && <tr > <td className={styles.modal__content}> Suspect </td> <td className={styles.modal__content}> {res.suspect} </td> </tr>}
+                {clicked===3 && <tr > <td className={styles.modal__content}> FIR ID </td> <td className={styles.modal__content}> {res.firId} </td> </tr>}
                 
               </tbody>)}
             </table>
@@ -305,9 +346,9 @@ const Lookup = () => {
                           value={id}
                           onChange={(e)=>onChangeHandler(clicked,e.target.value)}
                         />
-                        <button onClick={() => openModal()}> Submit </button>
-                        <button onClick={() => connect2(clicked)}> Submit2 </button>
                         <br></br>
+                        <br></br>
+                        <button onClick={() => connect2(clicked)} className={styles.button1} role="button"> Get Details !</button>
                         <br></br>
                       </animated.div>
                     )
@@ -319,6 +360,9 @@ const Lookup = () => {
                         style={style}
                         className={styles.description__smallTitle}
                       >
+                        <label style={{color:"red",fontWeight:"bold"}} for="name">OR  </label>
+                        <br></br>
+                        <br></br>
                         <label for="name">Enter City/Town: </label>
                         <input
                           type="text"
@@ -341,8 +385,7 @@ const Lookup = () => {
                         />
                         <br></br>
                         <br></br>
-                        <button onClick={() => openModal()}> Submit </button>
-                        <button onClick={() => connect2(10)}> Submit2 </button>
+                        <button onClick={() => connect2(10)} className={styles.button1} role="button"> Get Details on Mail !</button>
 
                       </animated.div>
                     )

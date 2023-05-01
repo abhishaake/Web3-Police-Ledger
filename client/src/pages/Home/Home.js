@@ -2,51 +2,13 @@ import React, { useState, useEffect } from "react";
 import styles from "./Home.module.scss";
 import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
-import getWeb3 from "../../getWeb3";
 import Header from "../../components/UI/header/Header";
 import { myGlobal } from "../../globalvariable";
-import { useNavigate } from 'react-router'
 
 
 
 const Home = () => {
-  const [show, setShow] = useState(false);
-  const[contract, setContract] = useState("");
-  let web3 = null;
-  const[account, setAccount] = useState("");
-  let loggedInAccount = "";
-  const temp = async () => {
-    console.log("inside");
-    web3 = await getWeb3();
-    console.log("pass");
-    
-    // loadWeb3Contract(web3);
-  }
-  const loadWeb3Account = async (web3) =>{
-    const accounts = await web3.eth.getAccounts();
-    if(accounts){
-      setAccount(accounts[0]);
-      loggedInAccount = accounts[0];
-      
-
-      console.log("account =  "+ accounts[0]);
-    }
-    return;
-  }
-
-  const connect = async () => {
-    if(web3==null) console.log("still null");
-    else console.log("web3 = " + web3);
-
-    await loadWeb3Account(web3);
-
-    console.log("account read = "+ loggedInAccount);
-    if(loggedInAccount==="0x117B6314cBD99f80b6182FF846e4307427B9892e"){
-      console.log("setting show = true");
-      setShow(true);
-    }
-    
-  }
+  
   useEffect(() => {
     console.log("globalvariable = " + myGlobal.count);
     
@@ -55,7 +17,6 @@ const Home = () => {
     }
     myGlobal.count = "home";
 
-    temp();
 
   }, []);
 
@@ -89,9 +50,6 @@ const Home = () => {
           <button className={styles.home__button}>REGISTER</button>
         </Link> </animated.div>
        
-      
-      
-    
     </>
   );
 };

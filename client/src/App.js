@@ -7,21 +7,9 @@ import Home from "./pages/Home/Home";
 import Technology from "./pages/Technology/Technology";
 import Register from "./pages/Register/Register";
 import Lookup from "./pages/Lookup/Lookup";
-import getWeb3 from "./getWeb3";
-import Auction from "./contracts/Auction.json";
-import Async from "react-async";
 
 function App() {
 
-  const[contract, setContract] = useState("");
-  
-  const[account, setAccount] = useState("");
-  let loggedInAccount = "";
-  
-
-
-
-  const [show, setShow] = useState(false);
 
   useEffect(() => {
 

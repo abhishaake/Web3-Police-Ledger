@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSpring, useTransition, animated } from "react-spring";
 import styles from "./Technology.module.scss";
-import spaceportPortrait from "./technology-images/image-spaceport-portrait.jpg";
 import blocks from "./technology-images/blocks.jpg";
 import Header from "../../components/UI/header/Header";
 import { myGlobal } from "../../globalvariable";
 
 import db from "./technology-images/db.jpg";
-import data from "../../data.json";
 const Technology = () => {
   const isDesktop = window.matchMedia("(min-width: 1200px)").matches;
 

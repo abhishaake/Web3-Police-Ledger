@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Hamburger from "./UI/header/Hamburger";
 import Logo from "./UI/header/Logo";
 import styles from "./Login.module.scss";
 import getWeb3 from "../getWeb3";
-import Auction from "../contracts/Auction.json";
+import Records from "../contracts/Records.json";
 import { Link, useLocation } from "react-router-dom";
 import { myGlobal } from "../globalvariable";
 
-import MenuDesktop from "./UI/header/MenuDesktop";
 
 const Login = (props) => {
   
@@ -20,9 +18,9 @@ const Login = (props) => {
 
   const loadWeb3Contract = async (web3) => {
     const networkId = await web3.eth.net.getId();
-    const networkData = Auction.networks[networkId];
+    const networkData = Records.networks[networkId];
     if(networkData){
-      const abi = Auction.abi;
+      const abi = Records.abi;
       const address = networkData.address;
       const contract = new web3.eth.Contract(abi, address);
       setContract(contract);
@@ -89,12 +87,13 @@ const Login = (props) => {
         
     <form className={styles.box}>
         <input placeholder="Enter Your Name" className={styles.box__input}></input>
-        
+        <Link to="/home">
         <button className={styles.box__button}>
-            <Link to="/home">
+            
                 LOGIN
-            </Link>
+            
         </button>
+        </Link>
     </form>
     {showId ? <><div className={styles.box__heading}> LOGIN ADDRESS: <div className={styles.box__heading__address}>{account}</div></div></> : <></>}
     </div>
