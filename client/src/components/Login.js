@@ -5,6 +5,7 @@ import getWeb3 from "../getWeb3";
 import Records from "../contracts/Records.json";
 import { Link, useLocation } from "react-router-dom";
 import { myGlobal } from "../globalvariable";
+import { useSpring, useTransition, animated } from "react-spring";
 
 
 const Login = (props) => {
@@ -76,8 +77,21 @@ const Login = (props) => {
     props.onComponentHandler(enteredPage)
   }
 
+  const onChangeHandler = (name)=> {
+    localStorage.setItem("name", name);
+  }
+
+  const fadePage = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  });
+
   return (
     <>
+    <animated.div
+        style={fadePage}
+        className={styles.destinationBody}
+      ></animated.div>
     <div className={styles.header}>
         <Logo />
         <div className={styles.title}>BLOCKCHAIN BASED POLICE LEDGER</div> 
@@ -86,7 +100,7 @@ const Login = (props) => {
     <div className={styles.body}>
         
     <form className={styles.box}>
-        <input placeholder="Enter Your Name" className={styles.box__input}></input>
+        <input onChange={(e)=>onChangeHandler(e.target.value)} placeholder="Enter Your Name" className={styles.box__input}></input>
         <Link to="/home">
         <button className={styles.box__button}>
             

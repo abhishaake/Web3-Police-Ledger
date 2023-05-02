@@ -266,15 +266,17 @@ const Lookup = () => {
             <table className={styles.modal__table}>
               {result.map((res, key)=><tbody key={key}>
                 
-                {<tr > <td className={styles.modal__content}> Name </td> <td className={styles.modal__content}> {res.name} </td> </tr>}
-                {(clicked===0 || clicked===1 || clicked===2) && <tr > <td className={styles.modal__content}> Email </td> <td className={styles.modal__content}> {res.email} </td> </tr>}
-                {clicked===1 && <tr > <td className={styles.modal__content}> Address </td> <td className={styles.modal__content}> {res.stationaddress} </td> </tr>}
-                {clicked===1 && <tr > <td className={styles.modal__content}> Pincode </td> <td className={styles.modal__content}> {res.pincode} </td> </tr>}
-                {clicked===0 && <tr > <td className={styles.modal__content}> Complaint </td> <td className={styles.modal__content}> {res.complaint} </td> </tr>}
-                {clicked===0 && <tr > <td className={styles.modal__content}> Date </td> <td className={styles.modal__content}> {res.date} </td> </tr>}
-                {clicked===0 && <tr > <td className={styles.modal__content}> Place </td> <td className={styles.modal__content}> {res.place} </td> </tr>}
-                {clicked===0 && <tr > <td className={styles.modal__content}> Suspect </td> <td className={styles.modal__content}> {res.suspect} </td> </tr>}
-                {clicked===3 && <tr > <td className={styles.modal__content}> FIR ID </td> <td className={styles.modal__content}> {res.firId} </td> </tr>}
+                {<tr > <td className={styles.modal__content}> Name: </td> <td className={styles.modal__content}> {res.name} </td> </tr>}
+                {(clicked!==3) && <tr > <td className={styles.modal__content}> Email: </td> <td className={styles.modal__content}> {res.email} </td> </tr>}
+                {clicked===1 && <tr > <td className={styles.modal__content}> Address: </td> <td className={styles.modal__content}> {res.stationaddress} </td> </tr>}
+                {clicked===1 && <tr > <td className={styles.modal__content}> Pincode: </td> <td className={styles.modal__content}> {res.pincode} </td> </tr>}
+                {clicked===0 && <tr > <td className={styles.modal__content}> Complaint: </td> <td className={styles.modal__content}> {res.complaint} </td> </tr>}
+                {clicked===0 && <tr><td className={styles.modal__content}> Charges: </td> <td className={styles.modal__content}>{res.crimes.map((crime,key)=><span key={key}>{key!==0 && <>,</>} {crime} </span>)}</td> </tr>}
+                {clicked===0 && <tr > <td className={styles.modal__content}> Date: </td> <td className={styles.modal__content}> {res.date} </td> </tr>}
+                {clicked===0 && <tr > <td className={styles.modal__content}> Place: </td> <td className={styles.modal__content}> {res.place} </td> </tr>}
+                {clicked===0 && <tr > <td className={styles.modal__content}> Suspect: </td> <td className={styles.modal__content}> {res.suspect} </td> </tr>}
+                {clicked===3 && <tr > <td className={styles.modal__content}> FIR ID: </td> <td className={styles.modal__content}> {res.firId} </td> </tr>}
+                {clicked===3 && <tr > <td className={styles.modal__content}> Charges: </td> <td className={styles.modal__content}> {res.crimes.map((crime,key)=><span key={key}>{key!==0 && <>,</>} {crime} </span>)}</td> </tr>}
                 
               </tbody>)}
             </table>

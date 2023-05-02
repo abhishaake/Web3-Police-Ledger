@@ -7,7 +7,7 @@ const MenuDesktop = () => {
 
   return (
     <>
-     hyivib  LOGOUT
+     <span style={{color:"white"}}>Welcome {localStorage.getItem("name")}</span>
       <div className={styles.line}></div>
       <div className={styles.menu}>
         <Link to="/home">

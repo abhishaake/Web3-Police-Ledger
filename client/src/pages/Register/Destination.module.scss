@@ -138,7 +138,7 @@
       display: block;
       width: 400%;
       padding-top: 100%;
-      animation: spin 250s linear infinite;
+      animation: spin 600s linear infinite;
       background-image: var(--background-planet);
       background-size: auto 100%;
     }
@@ -200,6 +200,16 @@
   align-items: center;
   @include xl {
     align-items: flex-start;
+  }
+
+  &__options {
+    max-width: 600px;
+    padding: 0px;
+    min-width: 230px;
+    font-family: "JetBrains Mono",monospace;
+    color: #000;
+    font-weight: bold;
+    width: fit-content;
   }
 
   &__inputbox {

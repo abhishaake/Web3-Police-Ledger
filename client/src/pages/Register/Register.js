@@ -12,6 +12,8 @@ import Header from "../../components/UI/header/Header";
 import { myGlobal } from "../../globalvariable";
 import {emailBody} from "./emailbody.js";
 import emailImage from "./image-1.png";
+import Select from "react-select";
+import {Charges} from "./Charges";
 
 const Register = () => {
 
@@ -65,23 +67,46 @@ const Register = () => {
       
   }
 
+  const checksize = () => {
+    let len = optionList.length;
+    if(len<=3) return true;
+    else return false;
+  }
 
   const [show, setShow] = useState(true);
-  
+
+  const [optionList, setoptionList] = useState([]);
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
+
+  const onChangeOptions = (list) => {
+    let len = Object.keys(list).length;
+    let ls = [];
+    for(let i=0;i<len;i++){
+      ls.push(list[i].label);
+    }
+    setoptionList(ls);
+  }
 
   const register = async (num) => {
     if(num===0){
       // for FIR Registration
-      if(form.name==="" || form.phone==="" || form.email==="" || form.adhar==="" || form.complaint==="" || form.suspect==="" || form.date==="" || form.place===""){
+      if(optionList.length===0 || form.name==="" || form.phone==="" || form.email==="" || form.adhar==="" || form.complaint==="" || form.suspect==="" || form.date==="" || form.place===""){
         alert("Form Invalid ! Please fill the complete Form.");
         return;
       }
 
       uniqueId = Date.now();
 
-      contract.methods.addFIR(uniqueId,form.name,form.phone,form.email,form.adhar,form.complaint,form.suspect,form.date,form.place).send({from: account}, (error)=>{
+      contract.methods.addFIR(uniqueId,form.name,form.phone,form.email,form.adhar,form.complaint,form.suspect,form.date,form.place, optionList).send({from: account}, (error)=>{
         if(!error){
             sendEmail();
+        }
+        else{
+          alert("Error in Registration");
         }
       });
 
@@ -172,7 +197,8 @@ const Register = () => {
     <div style="font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
   <p style="line-height: 140%;"> </p>
   <p style="line-height: 140%;"><span style="font-weight:bold">Complaint :</span> ${form.complaint}</p>
-  <p style="line-height: 140%;"><span style="font-weight:bold">Suspect INFO :</span> ${form.suspect}</p>
+  <p style="line-height: 140%;"><span style="font-weight:bold">Charges :</span> ${optionList}</p>
+  <p style="line-height: 140%;"><span style="font-weight:bold">Suspect INFO :</span>${form.suspect}</p>
   <p style="line-height: 140%;"><span style="font-weight:bold">Date :</span> ${form.date}</p>
   <p style="line-height: 140%;"><span style="font-weight:bold">Place :</span>${form.place}</p>
     </div>
@@ -187,7 +213,7 @@ const Register = () => {
         SecureToken: "d83897d2-a739-44df-8dda-7c3cb9a4bc07",
         To: form.email,
         From: "recordspolice5@gmail.com",
-        Subject: "Thank You for Registering",
+        Subject: `Thank You for Registering ${form.name}`,
         Body: body,
     };
 
@@ -339,17 +365,8 @@ const Register = () => {
 
              <div className={styles.description__wrapper}>
              <div className={styles.distance}>
-                {fadeIn(
-                  (style, i) =>
-                    i === clicked && (
-                      <animated.p
-                        style={style}
-                        className={styles.description__menu}
-                      >
-                        FORM
-                      </animated.p>
-                    )
-                )}
+                <br></br>
+                <br></br>
                 {fadeIn(
                   (style, i) =>
                     i === clicked && (
@@ -524,6 +541,16 @@ const Register = () => {
                           onChange={(e)=> {handleChange(e,1); setForm(form => ({...form, "complaint":e.target.value}))}}
                           value={form.complaint}
                         />
+                        <br></br>
+                        <br></br>
+                          <Select
+                            isMulti
+                            placeholder="Select Charges"
+                            options={Charges.list}
+                            isOptionDisabled={() => optionList.length>=3}
+                            onChange={(options)=>onChangeOptions(options)}
+                            className={styles.description__options}
+                          />    
 
                       </div>
                     )
@@ -543,6 +570,7 @@ const Register = () => {
                           onChange={(e)=> {handleChange(e,2); setForm(form => ({...form, "suspect":e.target.value}))}}
                           rows={rows2}
                         />
+                        
 
                       </div>
                     )
@@ -574,6 +602,7 @@ const Register = () => {
                           name="name"
                           class="form-control"
                         />
+                        
                       </div>
                     )
                 )}
@@ -585,7 +614,11 @@ const Register = () => {
                       >
                         
                         <button onClick={() => register(clicked)} className={styles.button1} role="button">Register !</button>
+                      <br></br>
+                      <br></br>
+                      <br></br>
                       </div>
+                      
                     
                 )}
               </div>

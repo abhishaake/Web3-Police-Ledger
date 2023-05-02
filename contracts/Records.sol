@@ -20,6 +20,7 @@ contract Records {
         string suspect;
         string date;
         string place;
+        string[] crimes;
     }
 
     struct station {
@@ -54,9 +55,10 @@ contract Records {
         string adhar;
         uint id;
         uint firId;
+        string []crimes;
     }
 
-    function addFIR(uint256 id,string memory _name,string memory _phone,string memory _email,string memory _adhar,string memory _complaint,string memory _suspect,string memory _date,string memory _place) public {
+    function addFIR(uint256 id,string memory _name,string memory _phone,string memory _email,string memory _adhar,string memory _complaint,string memory _suspect,string memory _date,string memory _place, string[] memory crimes) public {
         fir memory cur;
         cur.name = _name;
         cur.phone = _phone;
@@ -66,6 +68,7 @@ contract Records {
         cur.suspect = _suspect;
         cur.date = _date;
         cur.place = _place;
+        cur.crimes = crimes;
 
         firList[id] = cur;
     }
@@ -147,13 +150,13 @@ contract Records {
         uint id,
         uint firId) public {
             criminal memory cur;
-
+            fir memory temp = firList[firId];
             cur.name = name;
             cur.phone = phone;
             cur.id = id;
             cur.adhar = adhar;
             cur.firId = firId;
-
+            cur.crimes = temp.crimes;
             criminalList[id] = cur;
 
         }
@@ -163,8 +166,11 @@ contract Records {
     }
 
      constructor(){
-        addFIR(12345,"abhishek","12345","abc@example.com","543321","phone stolen","short man","23/01/2020","lucknow");
-        addFIR(13346,"abhishek","12345","abc@example.com","5123321","phone stolen","short man","27/01/2020","lucknow");
+        string[] memory temp = new string[](2);
+        temp[0]="Theft";
+        temp[1]="Assault";
+        addFIR(12345,"abhishek","12345","abc@example.com","543321","phone stolen","short man","23/01/2020","lucknow",temp);
+        addFIR(13346,"abhishek","12345","abc@example.com","5123321","phone stolen","short man","27/01/2020","lucknow",temp);
         addStation("EXPRESSWAY", "exp@example.com", "100", 1487, "Expressway, Noida", "201301");
         addOfficer("Abhishek", "abhi@example.com", "2417284123", "1262467612476", 2001, "1487");
         addAdmin("Admin1", "admin1@example.com", "72149216124", "6347126946128", "0x117B6314cBD99f80b6182FF846e4307427B9892e");
